@@ -8,7 +8,7 @@
       "schematics": {},
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
@@ -62,7 +62,8 @@
               "buildTarget": "poc-angular-grids:build:production"
             },
             "development": {
-              "buildTarget": "poc-angular-grids:build:development"
+              "buildTarget": "poc-angular-grids:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
