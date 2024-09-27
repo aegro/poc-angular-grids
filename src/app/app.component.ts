@@ -3,11 +3,12 @@ import { RouterOutlet } from '@angular/router';
 
 import { AngularLogo } from './shared/angular-logo/angular-logo';
 import { AgGridComponent } from './ag-grid/ag-grid.component';
+import { KendoUiComponent } from './kendo-ui/kendo-ui.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, AngularLogo, AgGridComponent],
+  imports: [RouterOutlet, AngularLogo, AgGridComponent, KendoUiComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

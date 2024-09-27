@@ -57,3 +57,7 @@
 .logoCell {
     background-color: #fff3;
 }
+
+[kendowatermarkoverlay] {
+    display: none;
+}

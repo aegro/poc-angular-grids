@@ -38,7 +38,9 @@ export class AgGridComponent {
   themeClass = 'ag-theme-quartz';
   private gridApi!: GridApi<People>;
   peopleService = inject(PeopleService);
-
+  pagination = true;
+  paginationPageSize = 50;
+  paginationPageSizeSelector = [10, 20, 50, 100];
   defaultColDef: ColDef = { 
     flex: 1,
     filter: true,
