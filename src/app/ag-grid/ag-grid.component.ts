@@ -3,7 +3,7 @@ import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-mod
 import { BarSparklineOptions, ColDef, GridApi, GridReadyEvent, ModuleRegistry, ValueFormatterParams } from '@ag-grid-community/core';
 import '@ag-grid-community/styles/ag-grid.css';
 import '@ag-grid-community/styles/ag-theme-quartz.css';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
 import { ColumnsToolPanelModule } from "@ag-grid-enterprise/column-tool-panel";
 import { MenuModule } from "@ag-grid-enterprise/menu";
 import { PeopleService } from '../shared/services/people.service';
@@ -29,12 +29,13 @@ ModuleRegistry.registerModules([
 @Component({
   selector: 'ag-grid',
   standalone: true,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AgGridAngular, CommonModule, CountryLogoRenderer],
   templateUrl: './ag-grid.component.html',
   styleUrl: './ag-grid.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AgGridComponent {
+export class AgGridComponent implements OnInit {
   themeClass = 'ag-theme-quartz';
   private gridApi!: GridApi<People>;
   peopleService = inject(PeopleService);
@@ -47,11 +48,7 @@ export class AgGridComponent {
     floatingFilter: true,
     editable: true,
   };
-  rowData: Observable<People[]> = this.peopleService.getPeople().pipe(map(array => array.map((item) => ({ 
-    ...item, 
-    target: Array.isArray(item.target) ? item.target : [item.target],
-    registered: new Date(typeof item.registered === 'string' ? item.registered.replace(/ /g,'') : item.registered)
-  }))));
+  rowData: People[] = [];
   colDefs: ColDef<People>[] = [
     { field: 'full_name', headerName: 'Contact Name' },
     { field: 'job_title', headerName: 'Job Title' },
@@ -72,6 +69,15 @@ export class AgGridComponent {
     { field: 'phone', headerName: 'Phone' },
     { field: 'address', headerName: 'Address' },
   ];
+
+  ngOnInit(): void {
+    this.peopleService.getPeople().pipe(map(array => array.map((item) => ({ 
+      ...item, 
+      target: Array.isArray(item.target) ? item.target : [item.target],
+      registered: new Date(typeof item.registered === 'string' ? item.registered.replace(/ /g,'') : item.registered)
+    }))))
+    .subscribe((data) => this.rowData = data);
+  }
 
   onBtExport() {
     this.gridApi.exportDataAsExcel();

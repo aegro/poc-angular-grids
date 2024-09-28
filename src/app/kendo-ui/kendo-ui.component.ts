@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, ViewChild } from '@angular/core';
 import {
   DataBindingDirective,
   ExcelModule,
@@ -17,6 +17,7 @@ import { PeopleService } from '../shared/services/people.service';
 @Component({
   selector: 'kendo-ui',
   standalone: true,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [GridModule, ChartsModule, InputsModule, PDFModule, ExcelModule, CommonModule],
   providers: [PeopleService],
   templateUrl: './kendo-ui.component.html',
@@ -31,7 +32,7 @@ export class KendoUiComponent {
   public pdfSVG: SVGIcon = filePdfIcon;
   public excelSVG: SVGIcon = fileExcelIcon;
 
-  constructor(private peopleService: PeopleService) {}
+  private peopleService = inject(PeopleService);
 
   public ngOnInit(): void {
     this.peopleService.getPeople().subscribe(gridData => {
