@@ -7,11 +7,12 @@ import { AngularLogo } from './shared/angular-logo/angular-logo';
 import { AgGridComponent } from './ag-grid/ag-grid.component';
 import { KendoUiComponent } from './kendo-ui/kendo-ui.component';
 import { SyncfusionComponent } from './syncfusion/syncfusion.component';
+import { DevExtremeComponent } from './devextreme/devextreme.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [TextBoxModule, TextAreaModule, NumericTextBoxModule, MaskedTextBoxModule, SliderModule, UploaderModule, ColorPickerModule, SignatureModule, RatingModule, OtpInputModule, SmartTextAreaModule, DropDownListModule, ComboBoxModule, AutoCompleteModule, MultiSelectModule, ListBoxModule, DropDownTreeModule, MentionModule, RouterOutlet, AngularLogo, AgGridComponent, KendoUiComponent, SyncfusionComponent],
+  imports: [TextBoxModule, TextAreaModule, NumericTextBoxModule, MaskedTextBoxModule, SliderModule, UploaderModule, ColorPickerModule, SignatureModule, RatingModule, OtpInputModule, SmartTextAreaModule, DropDownListModule, ComboBoxModule, AutoCompleteModule, MultiSelectModule, ListBoxModule, DropDownTreeModule, MentionModule, RouterOutlet, AngularLogo, AgGridComponent, KendoUiComponent, SyncfusionComponent, DevExtremeComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

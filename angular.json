@@ -28,6 +28,7 @@
               }
             ],
             "styles": [
+              "node_modules/devextreme/dist/css/dx.material.blue.light.css",
               {
                 "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
               },

@@ -1,0 +1,54 @@
+<h1>DevExtreme</h1>
+<dx-data-grid id="gridContainer" [dataSource]="dataSource" [remoteOperations]="false" [allowColumnReordering]="true"
+  [rowAlternationEnabled]="false" [showBorders]="true" [width]="'100%'" [height]="600"
+  (onContentReady)="contentReady($event)">
+  <dxo-filter-row [visible]="showFilterRow" [applyFilter]="currentFilter"></dxo-filter-row>
+  <dxo-header-filter [visible]="showHeaderFilter"></dxo-header-filter>
+  <dxo-paging [pageSize]="50"></dxo-paging>
+  <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>
+  <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
+  <dxo-group-panel [visible]="true"></dxo-group-panel>
+  <dxo-grouping [autoExpandAll]="false"></dxo-grouping>
+  <dxo-editing mode="row" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
+  </dxo-editing>
+  <dxi-column dataField="full_name" caption="Contact Name" [minWidth]="320"></dxi-column>
+  <dxi-column caption="Location" cellTemplate="countryCellTemplate"></dxi-column>
+  <div *dxTemplate="let d of 'countryCellTemplate'">
+    <div class="chart-cell">
+      <div class="loc">
+        <img class="flag" [src]="flagURL(d.data)" [width]="30" />
+      </div>
+    </div>
+  </div>
+  <dxi-column caption="Status" dataField="is_online" cellTemplate="statusCellTemplate"></dxi-column>
+  <div *dxTemplate="let d of 'statusCellTemplate'">
+    <div class="chart-cell">
+      <div *ngIf="d.value; else login" class="statustemp e-activecolor">
+        <span class="statustxt e-activecolor">Online</span>
+      </div>
+      <ng-template #login>
+        <div class="statustemp e-inactivecolor">
+          <span class="statustxt e-inactivecolor">Offline</span>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <dxi-column caption="Engagement" dataField="target" cellTemplate="targetCellTemplate" dataType="number"
+    format="percent" alignment="right" [allowGrouping]="false" cssClass="bullet"></dxi-column>
+  <div *dxTemplate="let d of 'targetCellTemplate'">
+    <div class="chart-cell">
+      <dx-bullet [showTarget]="false" [showZeroLevel]="true" [startScaleValue]="0" [endScaleValue]="100"
+        [value]="d.value">
+        <dxo-size [width]="150" [height]="35"></dxo-size>
+        <dxo-tooltip [enabled]="true" [paddingTopBottom]="2" [customizeTooltip]="customizeTooltip">
+          <dxo-font [size]="18"></dxo-font>
+        </dxo-tooltip>
+        <dxo-margin [top]="5" [bottom]="0" [left]="5"></dxo-margin>
+      </dx-bullet>
+    </div>
+  </div>
+  <dxi-column dataField="budget" caption="Sale Amount" dataType="number" format="currency" alignment="right">
+  </dxi-column>
+  <dxi-column dataField="registered" caption="Sale Date" dataType="date" alignment="center"></dxi-column>
+  <dxi-column dataField="address" caption="Address" dataType="string" [minWidth]="320"></dxi-column>
+</dx-data-grid>
