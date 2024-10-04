@@ -7,7 +7,6 @@ import {
 } from '@progress/kendo-angular-grid';
 import { SVGIcon, filePdfIcon, fileExcelIcon } from '@progress/kendo-svg-icons';
 import { process } from '@progress/kendo-data-query';
-import { employees } from './employees';
 import { images } from './images';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { ChartsModule } from "@progress/kendo-angular-charts";
@@ -25,7 +24,6 @@ import { PeopleService } from '../shared/services/people.service';
 })
 export class KendoUiComponent {
   @ViewChild(DataBindingDirective) dataBinding!: DataBindingDirective;
-  public gridData: unknown[] = employees;
   public gridView!: unknown[];
 
   public mySelection: string[] = [];
@@ -38,45 +36,6 @@ export class KendoUiComponent {
     this.peopleService.getPeople().subscribe(gridData => {
       this.gridView = gridData;
     })
-  }
-
-  public onFilter(value: Event): void {
-    const inputValue = value;
-
-    this.gridView = process(this.gridData, {
-      filter: {
-        logic: 'or',
-        filters: [
-          {
-            field: 'full_name',
-            operator: 'contains',
-            value: inputValue,
-          },
-          {
-            field: 'job_title',
-            operator: 'contains',
-            value: inputValue,
-          },
-          {
-            field: 'budget',
-            operator: 'contains',
-            value: inputValue,
-          },
-          {
-            field: 'phone',
-            operator: 'contains',
-            value: inputValue,
-          },
-          {
-            field: 'address',
-            operator: 'contains',
-            value: inputValue,
-          },
-        ],
-      },
-    }).data;
-
-    this.dataBinding.skip = 0;
   }
 
   public photoURL(dataItem: { img_id: string; gender: string }): string {

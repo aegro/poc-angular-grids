@@ -11,6 +11,8 @@
   <dxo-grouping [autoExpandAll]="false"></dxo-grouping>
   <dxo-editing mode="row" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
   </dxo-editing>
+  <dxo-selection mode="multiple"></dxo-selection>
+  <dxo-export [enabled]="true" [formats]="['pdf','excel']" [allowExportSelectedData]="true"></dxo-export>
   <dxi-column dataField="full_name" caption="Contact Name" [minWidth]="320"></dxi-column>
   <dxi-column caption="Location" cellTemplate="countryCellTemplate"></dxi-column>
   <div *dxTemplate="let d of 'countryCellTemplate'">

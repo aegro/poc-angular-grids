@@ -10,6 +10,12 @@ import { images } from '../images';
 import { CommonModule } from '@angular/common';
 import { map } from 'rxjs';
 import { DxoHeaderFilterComponent } from 'devextreme-angular/ui/nested';
+import { Workbook } from 'exceljs';
+import { saveAs } from 'file-saver';
+// Our demo infrastructure requires us to use 'file-saver-es'. We recommend that you use the official 'file-saver' package in your applications.
+import { exportDataGrid as excelExporter } from 'devextreme/excel_exporter';
+import { jsPDF } from 'jspdf';
+import { exportDataGrid as pdfExporter } from 'devextreme/pdf_exporter';
 
 
 @Component({
@@ -74,29 +80,32 @@ export class DevExtremeComponent implements OnInit {
     
   }
 
-  // calculateFilterExpression(value: string, _: unknown, target: string) {
-  //   const column = this as any;
+  onExcelExporting(e: DxDataGridTypes.ExportingEvent) {
+    const workbook = new Workbook();
+    const worksheet = workbook.addWorksheet('Employees');
 
-  //   if (target === 'headerFilter' && value === 'weekends') {
-  //     return [[this.getOrderDay, '=', 0], 'or', [AppComponent.getOrderDay, '=', 6]];
-  //   }
+    excelExporter({
+      component: e.component,
+      worksheet,
+      autoFilterEnabled: true,
+    }).then(() => {
+      workbook.xlsx.writeBuffer().then((buffer: any) => {
+        saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'data.xlsx');
+      });
+    });
+  }
 
-  //   return column.defaultCalculateFilterExpression.apply(this, arguments);
-  // }
 
-  // orderHeaderFilter = ({ dataSource }) => {
-  //   dataSource.postProcess = (results: unknown[]) => {
-  //     results.push({
-  //       text: 'Weekends',
-  //       value: 'weekends',
-  //     });
-  //     return results;
-  //   };
-  // };
-
-  // clearFilter() {
-  //   this.dataGrid.instance.clearFilter();
-  // }
+  onPdfExporting(e: DxDataGridTypes.ExportingEvent) {
+    const doc = new jsPDF();
+    pdfExporter({
+      jsPDFDocument: doc,
+      component: e.component,
+      indent: 5,
+    }).then(() => {
+      doc.save('data.pdf');
+    });
+  }
 
   contentReady = (e: DxDataGridTypes.ContentReadyEvent) => {
     if (!this.collapsed) {
