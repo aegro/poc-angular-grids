@@ -13,6 +13,13 @@
   [resizable]="true"
   [height]="600"
   [columnMenu]="{ filter: true }"
+
+  (dataStateChange)="onStateChange($event)"
+  (edit)="editHandler($event)"
+  (cancel)="cancelHandler($event)"
+  (save)="saveHandler($event)"
+  (remove)="removeHandler($event)"
+  (add)="addHandler($event)"
 >
   <ng-template kendoGridToolbarTemplate>
     <kendo-textbox
@@ -129,7 +136,12 @@
     </kendo-grid-column>
   </kendo-grid-column-group>
   <kendo-grid-column-group title="Contacts" [columnMenu]="false">
-    <kendo-grid-column field="phone" title="Phone" [width]="130">
+    <kendo-grid-column field="registered" title="Date" [width]="130" editor="date">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <span >{{
+          dataItem.registered | date
+        }}</span>
+      </ng-template>
     </kendo-grid-column>
     <kendo-grid-column field="address" title="Address" [width]="200">
     </kendo-grid-column>
@@ -140,4 +152,16 @@
     [repeatHeaders]="true"
   ></kendo-grid-pdf>
   <kendo-grid-excel fileName="Employees.xlsx"></kendo-grid-excel>
+  <kendo-grid-command-column title="command" [width]="220">
+    <ng-template kendoGridCellTemplate let-isNew="isNew">
+      <button kendoGridEditCommand [primary]="true">Edit</button>
+      <button kendoGridRemoveCommand>Remove</button>
+      <button kendoGridSaveCommand [disabled]="formGroup?.invalid || false">
+        {{ isNew ? "Add" : "Update" }}
+      </button>
+      <button kendoGridCancelCommand>
+        {{ isNew ? "Discard changes" : "Cancel" }}
+      </button>
+    </ng-template>
+  </kendo-grid-command-column>
 </kendo-grid>
