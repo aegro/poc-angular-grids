@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { People } from './people';
-import { shareReplay } from 'rxjs';
+import { map, shareReplay } from 'rxjs';
+
+// var json = require('./db.json');
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,15 @@ export class PeopleService {
 
   constructor(private httpClient: HttpClient) { }
 
+  // getPeople() {
+  //   return this.httpClient.get<People[]>(this.path).pipe(shareReplay())
+  // }
+
   getPeople() {
-    return this.httpClient.get<People[]>(this.path).pipe(shareReplay())
+    return this.httpClient.get<{ people: People[] }>('/assets/db.json').pipe(
+      map(json => json.people),
+      shareReplay()
+    )
   }
+
 }
