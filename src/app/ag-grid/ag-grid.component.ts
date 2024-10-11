@@ -61,10 +61,14 @@ export class AgGridComponent implements OnInit {
   colDefs: ColDef<People>[] = [
     {
       field: 'full_name', headerName: 'Contact Name', filter: "agTextColumnFilter", filterParams: {
-        buttons: ["apply"],
+        buttons: ['apply', 'clear'],
       } as INumberFilterParams
     },
-    { field: 'job_title', headerName: 'Job Title', enableRowGroup: true, filter: "agTextColumnFilter" },
+    {
+      field: 'job_title', headerName: 'Job Title', enableRowGroup: true, filter: "agTextColumnFilter", filterParams: {
+        buttons: ['apply', 'clear'],
+      } as INumberFilterParams
+    },
     {
       field: 'country', headerName: 'Country',
       cellRenderer: CountryLogoRenderer,
@@ -72,19 +76,35 @@ export class AgGridComponent implements OnInit {
       minWidth: 50,
     },
     { field: 'is_online', headerName: 'Status' },
-    { field: 'registered', headerName: 'Registered', cellDataType: 'date', filter: "agDateColumnFilter", },
     {
-      field: 'target', headerName: 'Engagement', cellRenderer: "agSparklineCellRenderer", cellRendererParams: {
+      field: 'registered', headerName: 'Registered', cellDataType: 'date', filter: "agDateColumnFilter", filterParams: {
+        buttons: ['apply', 'clear'],
+      } as INumberFilterParams,
+    },
+    {
+      field: 'target',
+      headerName: 'Engagement',
+      cellRenderer: "agSparklineCellRenderer",
+      cellRendererParams: {
         sparklineOptions: {
           type: "bar",
           label: { enabled: true },
           valueAxisDomain: [0, 100],
         } as BarSparklineOptions,
-      }
+      },
+      filterParams: {
+        buttons: ['apply', 'clear'],
+      } as INumberFilterParams
     },
-    { field: 'budget', filter: "agNumberColumnFilter", headerName: 'Budget', valueFormatter: currencyFormatter },
-    { field: 'phone', headerName: 'Phone', filter: "agTextColumnFilter" },
-    { field: 'address', headerName: 'Address', filter: "agTextColumnFilter" },
+    { field: 'budget', filter: "agNumberColumnFilter", filterParams: {
+      buttons: ['apply' , 'clear' ],
+    } as INumberFilterParams, headerName: 'Budget', valueFormatter: currencyFormatter },
+    { field: 'phone', headerName: 'Phone', filter: "agTextColumnFilter", filterParams: {
+      buttons: ['apply' , 'clear' ],
+    } as INumberFilterParams },
+    { field: 'address', headerName: 'Address', filter: "agTextColumnFilter", filterParams: {
+      buttons: ['apply' , 'clear' ],
+    } as INumberFilterParams },
   ];
 
   ngOnInit(): void {

@@ -7,6 +7,7 @@
     "start": "ng serve",
     "start:server": "ng serve",
     "build": "ng build",
+    "build:git": "ng build --base-href poc-angular-grids && mv docs/browser/* docs/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "predeploy": "npm run build",
